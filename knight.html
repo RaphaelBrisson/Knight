@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Knight</title>
+
+	<style>
+		.knight {
+			width: 587px;
+			height: 707px;
+			animation: spriteAnim .8s steps(10) infinite;
+			background-image: url('knight_idle.png');
+		}
+	
+
+		.knightRun {
+			background-image: url('knight_run.png');
+		}
+
+		.jumpAnim {
+			animation: jump .8s;
+		}
+
+		.knightJump {
+			background-image: url('knight_jump.png');
+		}
+
+		.knightAttack {
+			background-image: url('knight_attack.png');
+		}
+
+		.knightLeft {
+			transform: scaleX(-1);
+		}
+
+		.knightRight {
+			transform: scaleX(1);
+		}
+
+	
+		@keyframes spriteAnim {
+			100% {
+				background-position: calc(587px * 10);
+			}
+		}
+
+		@keyframes jump {
+			0% {
+				transform: translateY(0);
+			}
+			50% {
+				transform: translateY(-100px);
+			}
+			100% {
+				transform: translateY(0);
+			}
+		}
+	</style>
+</head>
+<body>
+
+
+
+
+	<div class="knightcontainercontainer">
+		<div class="knightcontainer">
+			<div class="knight"></div>
+		</div>
+	</div>	
+
+
+
+
+	<script src="jquery.js"></script>
+	<script>
+		posX = 0;
+		
+		$(window).keydown(function (e) {
+		  if (e.keyCode === 67) {
+		    e.preventDefault();
+		    $('.knight').addClass('knightJump');
+		    $('.knightcontainer').addClass('jumpAnim');
+		    setTimeout(function()
+		    { 
+		    	$('.knight').removeClass('knightJump');
+		    	$('.knightcontainer').removeClass('jumpAnim');
+		    }, 800);
+		  }
+		});
+
+		$(window).keydown(function (e) {
+		  if (e.keyCode === 37) {
+		    e.preventDefault();
+		    posX = posX - 25;
+		    $('.knightcontainercontainer').css('transform', 'translateX(' + posX + 'px)');
+		    $('.knight').removeClass('knightRight').addClass('knightRun knightLeft');
+		  }
+		});
+
+		$(window).keyup(function (e) {
+		  if (e.keyCode === 37) {
+		    e.preventDefault();
+		    $('.knight').removeClass('knightRun');
+		  }
+		});
+
+		$(window).keydown(function (e) {
+		  if (e.keyCode === 39) {
+		    e.preventDefault();
+		    posX = posX + 25;
+		    $('.knightcontainercontainer').css('transform', 'translateX(' + posX + 'px)');
+		    $('.knight').removeClass('knightLeft').addClass('knightRun knightRight');
+		  }
+		});
+
+		$(window).keyup(function (e) {
+		  if (e.keyCode === 39) {
+		    e.preventDefault();
+		    $('.knight').removeClass('knightRun');
+		  }
+		});
+
+		$(window).keydown(function (e) {
+		  if (e.keyCode === 88) {
+		    e.preventDefault();
+		    $('.knight').addClass('knightAttack');
+		    setTimeout(function()
+		    { 
+		    	$('.knight').removeClass('knightAttack');
+		    }, 800);
+		  }
+		});
+
+	</script>
+
+</body>
+</html>
